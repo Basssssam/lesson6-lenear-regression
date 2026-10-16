@@ -1,4 +1,3 @@
-```python
 import streamlit as st
 import pandas as pd
 import numpy as np
@@ -211,4 +210,34 @@ fig_selected.add_trace(
         x=[selected_year],
         y=[predicted_temp],
         mode="markers",
-        name="선택
+        name="선택한 연도의 예상 기온",
+        marker=dict(size=15, symbol="diamond"),
+        hovertemplate=(
+            f"{selected_year}년<br>"
+            "예상 기온: %{y:.2f}℃"
+            "<extra></extra>"
+        )
+    )
+)
+
+fig_selected.update_layout(
+    xaxis=dict(range=[1900, 2100])
+)
+
+st.plotly_chart(fig_selected, use_container_width=True)
+
+# -----------------------------
+# 분석에 사용한 데이터 확인
+# -----------------------------
+with st.expander("분석에 사용한 연도별 데이터 보기"):
+    st.dataframe(
+        yearly,
+        use_container_width=True,
+        hide_index=True
+    )
+
+st.caption(
+    "주의: 예상 기온은 2025년까지의 관측 자료에 맞춘 "
+    "선형 회귀 직선의 계산 결과입니다. "
+    "실제 미래 기온이나 기후 변화를 정확하게 예측하는 값은 아닙니다."
+)
